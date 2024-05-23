@@ -1,0 +1,6 @@
+.social-link-footer {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+    z-index: 2;
+  }
