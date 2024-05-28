@@ -1,4 +1,3 @@
-// src/components/Pad.js
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -7,7 +6,6 @@ const PadWrapper = styled.div`
   display: flex;
   justify-content: center;
   perspective: 1000px;
-  margin-top: 50px;
 `;
 
 const PadContainer = styled.div`
@@ -169,11 +167,9 @@ const Pad = () => {
 
         if (padMiddle <= viewportMiddle) {
           setTiltAngle(0);
-        } else if (rect.top >= 0) {
-          const tilt = ((padMiddle - viewportMiddle) / viewportMiddle) * maxTilt;
-          setTiltAngle(Math.min(tilt, maxTilt));
         } else {
-          setTiltAngle(maxTilt);
+          const tilt = ((padMiddle - viewportMiddle) / (windowHeight - viewportMiddle)) * maxTilt;
+          setTiltAngle(Math.min(tilt, maxTilt));
         }
       }
     };

@@ -31,13 +31,18 @@ const AppContainer = styled.div`
 const Section = styled.div`
   height: auto;
   padding: 40px 0;
-  border: 1px solid ${({ theme }) => theme.text};
   margin: 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+`;
+
+const Section1 = styled(Section)`
+  background: ${({ gradient }) => gradient};
+  transition: background 0.2s;
+  color: ${({ theme }) => theme.text};
 `;
 
 const Header = styled.h1`
@@ -89,6 +94,7 @@ const SubSection = styled.div`
 
 const SubHeader = styled.h2`
   font-size: 2em;
+  text-align: center;
   margin-bottom: 20px;
   color: ${({ theme }) => theme.text};
 `;
@@ -140,7 +146,6 @@ const FormContainer = styled.form`
   max-width: 600px;
   margin: 20px 0;
   padding: 20px;
-  border: 1px solid ${({ theme }) => theme.text};
   border-radius: 10px;
   background: ${({ theme }) => theme.background};
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
@@ -148,7 +153,7 @@ const FormContainer = styled.form`
 
 const FormHeader = styled.h2`
   font-size: 2em;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   color: ${({ theme }) => theme.text};
 `;
 
@@ -213,8 +218,8 @@ const SubmitButton = styled.button`
 `;
 
 const ScrollButton = styled.button`
-  padding: 10px 20px;
-  margin: 90px 0px 45px 0px;
+  padding: 15px 30px;
+  margin: 12rem 0px 45px 0px;
   font-size: 1.2em;
   font-weight: bold;
   border: none;
@@ -234,10 +239,36 @@ const ScrollButton = styled.button`
 
 const App = () => {
   const [theme, setTheme] = useState('light');
+  const [gradient, setGradient] = useState(
+    'radial-gradient(circle, #ffffff, #a1c4fd, #c2e9fb)'
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const updateGradient = () => {
+    const scrollPosition = window.scrollY;
+    const scrollFactor = scrollPosition / (document.body.scrollHeight - window.innerHeight);
+    const gradientLight = `radial-gradient(circle at 50% ${18 + scrollFactor * 300}%, #ffffff, #a1c4fd, #c2e9fb)`;
+    const gradientDark = `radial-gradient(circle at 50% ${18 + scrollFactor * 300}%, #000000, #434343, #282828)`;
+    setGradient(theme === 'light' ? gradientLight : gradientDark);
+  };
+
+  const handleScroll = () => {
+    updateGradient();
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    updateGradient();
+  }, [theme]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
@@ -251,11 +282,11 @@ const App = () => {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <Topbar scrollToSection={scrollToSection} toggleTheme={toggleTheme} theme={theme} />
       <AppContainer>
-        <Section id="section1">
+        <Section1 id="section1" gradient={gradient}>
           <ScrollButton onClick={() => scrollToSection('section3')}>Join Our WaitList</ScrollButton>
-          <Header>Discover and Book Experiences</Header>
+          <Header>Discover and Book <h1>Experiences</h1></Header>
           <Pad />
-        </Section>
+        </Section1>
         <Section id="section2">
           <Header>Features</Header>
           <Description>
@@ -265,29 +296,99 @@ const App = () => {
             <SubSection>
               <SubHeader>Organizers</SubHeader>
               <FeatureList>
-                {Array.from({ length: 5 }, (_, i) => (
-                  <FeatureItem key={i}>
-                    <FeatureIcon>🔧</FeatureIcon>
-                    <FeatureContent>
-                      <FeatureHeading>Feature {i + 1}</FeatureHeading>
-                      <FeatureDescription>This is a description for feature {i + 1}.</FeatureDescription>
-                    </FeatureContent>
-                  </FeatureItem>
-                ))}
+                {/* Organizer Feature 1 */}
+                <FeatureItem>
+                  <FeatureIcon>🔧</FeatureIcon>
+                  <FeatureContent>
+                    <FeatureHeading>Organizer Discovery</FeatureHeading>
+                    <FeatureDescription>Easily discover a diverse range of vendors for various services such as wedding planning, photography, catering, entertainment, and more. Browse through profiles, portfolios, and reviews to find the perfect match for your event needs.</FeatureDescription>
+                  </FeatureContent>
+                </FeatureItem>
+
+                {/* Organizer Feature 2 */}
+                <FeatureItem>
+                  <FeatureIcon>🔧</FeatureIcon>
+                  <FeatureContent>
+                    <FeatureHeading>Booking and Scheduling</FeatureHeading>
+                    <FeatureDescription>Seamlessly book vendors directly through the app, selecting preferred dates, times, and services. Receive instant booking confirmations and reminders to stay organized throughout the planning process.</FeatureDescription>
+                  </FeatureContent>
+                </FeatureItem>
+
+                {/* Organizer Feature 3 */}
+                <FeatureItem>
+                  <FeatureIcon>🔧</FeatureIcon>
+                  <FeatureContent>
+                    <FeatureHeading>Personalized Recommendations</FeatureHeading>
+                    <FeatureDescription>Receive personalized vendor recommendations based on your event type, preferences, and budget. Our smart algorithm analyzes your requirements to suggest the most suitable vendors for your specific needs.</FeatureDescription>
+                  </FeatureContent>
+                </FeatureItem>
+
+                {/* Organizer Feature 4 */}
+                <FeatureItem>
+                  <FeatureIcon>🔧</FeatureIcon>
+                  <FeatureContent>
+                    <FeatureHeading>Secure Payment Processing</FeatureHeading>
+                    <FeatureDescription>Enjoy peace of mind with secure payment processing integrated within the app. Easily handle transactions and payments for vendor bookings, ensuring a smooth and hassle-free experience.</FeatureDescription>
+                  </FeatureContent>
+                </FeatureItem>
+
+                {/* Organizer Feature 5 */}
+                <FeatureItem>
+                  <FeatureIcon>🔧</FeatureIcon>
+                  <FeatureContent>
+                    <FeatureHeading>Real-Time Communication</FeatureHeading>
+                    <FeatureDescription>Communicate directly with vendors in real-time through the app's messaging system. Ask questions, discuss details, and finalize arrangements with ease, ensuring clear and efficient communication throughout the planning process.</FeatureDescription>
+                  </FeatureContent>
+                </FeatureItem>
               </FeatureList>
             </SubSection>
             <SubSection>
               <SubHeader>Users</SubHeader>
               <FeatureList>
-                {Array.from({ length: 5 }, (_, i) => (
-                  <FeatureItem key={i}>
+                  {/* User Feature 1 */}
+                  <FeatureItem>
                     <FeatureIcon>💼</FeatureIcon>
                     <FeatureContent>
-                      <FeatureHeading>Feature {i + 1}</FeatureHeading>
-                      <FeatureDescription>This is a description for feature {i + 1}.</FeatureDescription>
+                      <FeatureHeading>Profile Creation and Management</FeatureHeading>
+                      <FeatureDescription>Create and manage a comprehensive vendor profile showcasing your services, portfolio, pricing, availability, and contact information. Customize your profile to attract potential clients and showcase your unique offerings.</FeatureDescription>
                     </FeatureContent>
                   </FeatureItem>
-                ))}
+
+                  {/* User Feature 2 */}
+                  <FeatureItem>
+                    <FeatureIcon>💼</FeatureIcon>
+                    <FeatureContent>
+                      <FeatureHeading>Booking Management</FeatureHeading>
+                      <FeatureDescription>Efficiently manage bookings, view upcoming appointments, and track client inquiries through the app. Stay organized and responsive to client needs, ensuring a seamless experience from inquiry to booking.</FeatureDescription>
+                    </FeatureContent>
+                  </FeatureItem>
+
+                  {/* User Feature 3 */}
+                  <FeatureItem>
+                    <FeatureIcon>💼</FeatureIcon>
+                    <FeatureContent>
+                      <FeatureHeading>Availability Calendar</FeatureHeading>
+                      <FeatureDescription>Set and manage your availability with an integrated calendar feature. Keep track of your schedule, block off unavailable dates, and manage bookings effectively to optimize your time and resources.</FeatureDescription>
+                    </FeatureContent>
+                  </FeatureItem>
+
+                  {/* User Feature 4 */}
+                  <FeatureItem>
+                    <FeatureIcon>💼</FeatureIcon>
+                    <FeatureContent>
+                      <FeatureHeading>Review and Rating Management</FeatureHeading>
+                      <FeatureDescription>Monitor and respond to client reviews and ratings to maintain a positive reputation and build trust with potential clients. Showcase positive feedback and address any concerns or feedback to continuously improve your services.</FeatureDescription>
+                    </FeatureContent>
+                  </FeatureItem>
+
+                  {/* User Feature 5 */}
+                  <FeatureItem>
+                    <FeatureIcon>💼</FeatureIcon>
+                    <FeatureContent>
+                      <FeatureHeading>Marketing and Promotion Tools</FeatureHeading>
+                      <FeatureDescription>Access marketing and promotion tools to increase visibility and attract more clients. Promote your services through featured listings, targeted advertisements, promotional campaigns, and partnerships within the app to reach a wider audience.</FeatureDescription>
+                    </FeatureContent>
+                  </FeatureItem>
               </FeatureList>
             </SubSection>
           </SubSectionContainer>

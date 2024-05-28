@@ -104,7 +104,6 @@ const DropdownOption = styled.div`
 
 const ScrollButton = styled.button`
   padding: 10px 20px;
-  margin: 90px 0px 45px 0px;
   font-size: 1.2em;
   font-weight: bold;
   border: none;
@@ -113,7 +112,6 @@ const ScrollButton = styled.button`
   background: linear-gradient(270deg, #ff7e5f, #feb47b);
   background-size: 400% 400%;
   color: white;
-  animation: ${scrollAnimation} 5s ease infinite;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
 
