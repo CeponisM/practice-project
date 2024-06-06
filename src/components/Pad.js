@@ -161,7 +161,7 @@ const Pad = () => {
       if (padElement) {
         const rect = padElement.getBoundingClientRect();
         const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-        const padMiddle = rect.top + (rect.height / 2);
+        const padMiddle = rect.top + (rect.height);
         const viewportMiddle = windowHeight / 2;
         const maxTilt = 21;
 

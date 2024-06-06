@@ -21,17 +21,17 @@ const darkTheme = {
 };
 
 const AppContainer = styled.div`
-  margin-top: 48px;
   padding: 20px;
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
   min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
 `;
 
 const Section = styled.div`
   height: auto;
-  padding: 40px 0;
-  margin: 20px 0;
+  padding: 60px 0;
+  margin: 40px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,12 +43,64 @@ const Section1 = styled(Section)`
   background: ${({ gradient }) => gradient};
   transition: background 0.2s;
   color: ${({ theme }) => theme.text};
+  position: relative;
+  overflow: hidden;
+  margin-top: 4.5rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: ${({ gradientOverlay }) => gradientOverlay};
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 2;
+  }
+`;
+
+const ContentContainer = styled.div`
+  position: relative;
+  z-index: 3;
 `;
 
 const Header = styled.h1`
-  font-size: 2.5em;
-  margin-bottom: 20px;
+  position: relative;
+  font-size: 3em;
+  margin-bottom: 30px;
   color: ${({ theme }) => theme.text};
+  font-family: 'Merriweather', serif;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  &::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    color: ${({ theme }) => theme === lightTheme ? '#000000' : '#ffffff'};
+    filter: blur(3px);
+    transform: scale(1.05);
+  }
 `;
 
 const Description = styled.p`
@@ -62,7 +114,7 @@ const SubSectionContainer = styled.div`
   display: flex;
   width: 100%;
   max-width: 1200px;
-  margin: 20px 0;
+  margin: 40px 0;
   text-align: left;
 
   @media (max-width: 768px) {
@@ -73,29 +125,29 @@ const SubSectionContainer = styled.div`
 const SubSection = styled.div`
   flex: 1;
   margin: 20px;
-  padding: 20px;
-  border: 1px solid ${({ theme }) => theme.text};
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 15px;
   background: ${({ theme }) => theme.background};
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
-
-  &:not(:last-child) {
-    border-right: none;
-  }
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border: 2px solid;
+  border-image-slice: 1;
+  border-width: 3px;
+  border-image-source: ${({ theme }) => theme === lightTheme
+    ? 'linear-gradient(to right, #ff7e5f, #feb47b)'
+    : 'linear-gradient(to right, #434343, #282828)'};
+  display: flex;
+  flex-direction: column;
 
   @media (max-width: 768px) {
     margin: 10px 0;
     border-right: 1px solid ${({ theme }) => theme.text};
-    &:not(:last-child) {
-      border-right: none;
-    }
   }
 `;
 
 const SubHeader = styled.h2`
-  font-size: 2em;
+  font-size: 2.2em;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   color: ${({ theme }) => theme.text};
 `;
 
@@ -103,39 +155,51 @@ const FeatureList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  flex: 1;
 `;
 
 const FeatureItem = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   padding: 20px;
-  border: 1px solid ${({ theme }) => theme.text};
   border-radius: 10px;
   background: ${({ theme }) => theme.background};
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid;
+  border-image-slice: 1;
+  border-width: 2px;
+  border-image-source: ${({ theme }) => theme === lightTheme
+    ? 'linear-gradient(to right, #ff7e5f, #feb47b)'
+    : 'linear-gradient(to right, #434343, #282828)'};
+  flex: 1;
 `;
 
+
 const FeatureIcon = styled.div`
-  font-size: 2em;
+  font-size: 2.5em;
   margin-right: 20px;
+  color: ${({ theme }) => theme.text};
 `;
 
 const FeatureContent = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
 `;
 
 const FeatureHeading = styled.h3`
-  font-size: 1.5em;
+  font-size: 1.8em;
   margin: 0;
   color: ${({ theme }) => theme.text};
 `;
 
 const FeatureDescription = styled.p`
-  font-size: 1em;
+  font-size: 1.1em;
   margin: 0;
   color: ${({ theme }) => theme.text};
+  flex: 1;
 `;
 
 const FormContainer = styled.form`
@@ -144,16 +208,16 @@ const FormContainer = styled.form`
   align-items: center;
   width: 100%;
   max-width: 600px;
-  margin: 20px 0;
-  padding: 20px;
-  border-radius: 10px;
+  margin: 40px 0;
+  padding: 30px;
+  border-radius: 15px;
   background: ${({ theme }) => theme.background};
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
 `;
 
 const FormHeader = styled.h2`
-  font-size: 2em;
-  margin-bottom: 0px;
+  font-size: 2.2em;
+  margin-bottom: 30px;
   color: ${({ theme }) => theme.text};
 `;
 
@@ -165,13 +229,13 @@ const FormField = styled.div`
 `;
 
 const Label = styled.label`
-  font-size: 1em;
+  font-size: 1.2em;
   margin-bottom: 5px;
   color: ${({ theme }) => theme.text};
 `;
 
 const Input = styled.input`
-  padding: 10px;
+  padding: 15px;
   border: 1px solid ${({ theme }) => theme.text};
   border-radius: 5px;
   font-size: 1em;
@@ -180,7 +244,7 @@ const Input = styled.input`
 `;
 
 const TextArea = styled.textarea`
-  padding: 10px;
+  padding: 15px;
   border: 1px solid ${({ theme }) => theme.text};
   border-radius: 5px;
   font-size: 1em;
@@ -190,7 +254,7 @@ const TextArea = styled.textarea`
 `;
 
 const Select = styled.select`
-  padding: 10px;
+  padding: 15px;
   border: 1px solid ${({ theme }) => theme.text};
   border-radius: 5px;
   font-size: 1em;
@@ -199,7 +263,7 @@ const Select = styled.select`
 `;
 
 const SubmitButton = styled.button`
-  padding: 10px 20px;
+  padding: 15px 30px;
   font-size: 1.2em;
   font-weight: bold;
   border: none;
@@ -242,6 +306,9 @@ const App = () => {
   const [gradient, setGradient] = useState(
     'radial-gradient(circle, #ffffff, #a1c4fd, #c2e9fb)'
   );
+  const [gradientOverlay, setGradientOverlay] = useState(
+    'linear-gradient(135deg, rgba(255, 0, 150, 0.3), rgba(0, 204, 255, 0.3))'
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -252,19 +319,22 @@ const App = () => {
     const scrollFactor = scrollPosition / (document.body.scrollHeight - window.innerHeight);
     const gradientLight = `radial-gradient(circle at 50% ${18 + scrollFactor * 300}%, #ffffff, #a1c4fd, #c2e9fb)`;
     const gradientDark = `radial-gradient(circle at 50% ${18 + scrollFactor * 300}%, #000000, #434343, #282828)`;
+    const gradientOverlayLight = `linear-gradient(135deg, rgba(255, 0, 150, 0.3), rgba(0, 204, 255, 0.3))`;
+    const gradientOverlayDark = `linear-gradient(135deg, rgba(255, 0, 150, 0.2), rgba(0, 204, 255, 0.2))`;
     setGradient(theme === 'light' ? gradientLight : gradientDark);
-  };
-
-  const handleScroll = () => {
-    updateGradient();
+    setGradientOverlay(theme === 'light' ? gradientOverlayLight : gradientOverlayDark);
   };
 
   useEffect(() => {
+    const handleScroll = () => {
+      updateGradient();
+    };
+
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     updateGradient();
@@ -282,120 +352,122 @@ const App = () => {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <Topbar scrollToSection={scrollToSection} toggleTheme={toggleTheme} theme={theme} />
       <AppContainer>
-        <Section1 id="section1" gradient={gradient}>
-          <ScrollButton onClick={() => scrollToSection('section3')}>Join Our WaitList</ScrollButton>
-          <Header>Discover and Book <h1>Experiences</h1></Header>
-          <Pad />
+        <Section1 id="section1" gradient={gradient} gradientOverlay={gradientOverlay}>
+          <ContentContainer>
+            <ScrollButton onClick={() => scrollToSection('section3')}>Join Our WaitList</ScrollButton>
+            <Header data-text="Explore and Reserve Activities">Explore and Reserve <h1>Activities</h1></Header>
+            <Pad />
+          </ContentContainer>
         </Section1>
         <Section id="section2">
-          <Header>Features</Header>
+          <Header>Highlights</Header>
           <Description>
-            There are an array of features targeted for your use case. If you're a vendor, you'll be able to use tools to attract customers and manage your bookings. If you're a person looking to book someone, you'll be able to use various tools to ensure you find the right person for the occasion.
+            We offer a range of features tailored to your needs. Vendors can utilize tools to attract customers and manage bookings effectively. Individuals looking to book services can access various tools to find the perfect match for their occasion.
           </Description>
           <SubSectionContainer>
             <SubSection>
-              <SubHeader>Organizers</SubHeader>
+              <SubHeader>Planners</SubHeader>
               <FeatureList>
                 {/* Organizer Feature 1 */}
                 <FeatureItem>
-                  <FeatureIcon>🔧</FeatureIcon>
+                  <FeatureIcon>🔍</FeatureIcon>
                   <FeatureContent>
-                    <FeatureHeading>Organizer Discovery</FeatureHeading>
-                    <FeatureDescription>Easily discover a diverse range of vendors for various services such as wedding planning, photography, catering, entertainment, and more. Browse through profiles, portfolios, and reviews to find the perfect match for your event needs.</FeatureDescription>
+                    <FeatureHeading>Planner Discovery</FeatureHeading>
+                    <FeatureDescription>Effortlessly explore a wide variety of vendors offering services like wedding planning, photography, catering, entertainment, and more. View profiles, portfolios, and reviews to find the ideal match for your event requirements.</FeatureDescription>
                   </FeatureContent>
                 </FeatureItem>
 
                 {/* Organizer Feature 2 */}
                 <FeatureItem>
-                  <FeatureIcon>🔧</FeatureIcon>
+                  <FeatureIcon>📅</FeatureIcon>
                   <FeatureContent>
-                    <FeatureHeading>Booking and Scheduling</FeatureHeading>
-                    <FeatureDescription>Seamlessly book vendors directly through the app, selecting preferred dates, times, and services. Receive instant booking confirmations and reminders to stay organized throughout the planning process.</FeatureDescription>
+                    <FeatureHeading>Reservations and Scheduling</FeatureHeading>
+                    <FeatureDescription>Easily secure your preferred vendors through the app, selecting your ideal dates, times, and services. Get immediate booking confirmations and timely reminders, ensuring a smooth and organized planning experience.</FeatureDescription>
                   </FeatureContent>
                 </FeatureItem>
 
                 {/* Organizer Feature 3 */}
                 <FeatureItem>
-                  <FeatureIcon>🔧</FeatureIcon>
+                  <FeatureIcon>🧩</FeatureIcon>
                   <FeatureContent>
-                    <FeatureHeading>Personalized Recommendations</FeatureHeading>
-                    <FeatureDescription>Receive personalized vendor recommendations based on your event type, preferences, and budget. Our smart algorithm analyzes your requirements to suggest the most suitable vendors for your specific needs.</FeatureDescription>
+                    <FeatureHeading>Tailored Suggestions</FeatureHeading>
+                    <FeatureDescription>Receive bespoke vendor recommendations tailored to your event type, preferences, and budget. Our advanced algorithm meticulously analyzes your requirements, offering the perfect vendors to match your unique needs.</FeatureDescription>
                   </FeatureContent>
                 </FeatureItem>
 
                 {/* Organizer Feature 4 */}
                 <FeatureItem>
-                  <FeatureIcon>🔧</FeatureIcon>
+                  <FeatureIcon>💳</FeatureIcon>
                   <FeatureContent>
-                    <FeatureHeading>Secure Payment Processing</FeatureHeading>
-                    <FeatureDescription>Enjoy peace of mind with secure payment processing integrated within the app. Easily handle transactions and payments for vendor bookings, ensuring a smooth and hassle-free experience.</FeatureDescription>
+                    <FeatureHeading>Reliable Payment Handling</FeatureHeading>
+                    <FeatureDescription>Experience worry-free transactions with our secure, in-app payment processing. Effortlessly manage all payments and bookings, guaranteeing a seamless and hassle-free experience from start to finish.</FeatureDescription>
                   </FeatureContent>
                 </FeatureItem>
 
                 {/* Organizer Feature 5 */}
                 <FeatureItem>
-                  <FeatureIcon>🔧</FeatureIcon>
+                  <FeatureIcon>✉️</FeatureIcon>
                   <FeatureContent>
-                    <FeatureHeading>Real-Time Communication</FeatureHeading>
-                    <FeatureDescription>Communicate directly with vendors in real-time through the app's messaging system. Ask questions, discuss details, and finalize arrangements with ease, ensuring clear and efficient communication throughout the planning process.</FeatureDescription>
+                    <FeatureHeading>Instant Messaging</FeatureHeading>
+                    <FeatureDescription>Connect with vendors instantly through our real-time messaging system. Effortlessly ask questions, discuss specifics, and finalize details, ensuring clear and efficient communication every step of the way.</FeatureDescription>
                   </FeatureContent>
                 </FeatureItem>
               </FeatureList>
             </SubSection>
             <SubSection>
-              <SubHeader>Users</SubHeader>
+              <SubHeader>Patrons</SubHeader>
               <FeatureList>
-                  {/* User Feature 1 */}
-                  <FeatureItem>
-                    <FeatureIcon>💼</FeatureIcon>
-                    <FeatureContent>
-                      <FeatureHeading>Profile Creation and Management</FeatureHeading>
-                      <FeatureDescription>Create and manage a comprehensive vendor profile showcasing your services, portfolio, pricing, availability, and contact information. Customize your profile to attract potential clients and showcase your unique offerings.</FeatureDescription>
-                    </FeatureContent>
-                  </FeatureItem>
+                {/* User Feature 1 */}
+                <FeatureItem>
+                  <FeatureIcon>🛠️</FeatureIcon>
+                  <FeatureContent>
+                    <FeatureHeading>Account Setup and Maintenance</FeatureHeading>
+                    <FeatureDescription>Showcase your unique offerings by creating and managing a detailed vendor profile. Highlight your services, portfolio, pricing, availability, and contact information. Customize your profile to attract potential clients and stand out from the competition.</FeatureDescription>
+                  </FeatureContent>
+                </FeatureItem>
 
-                  {/* User Feature 2 */}
-                  <FeatureItem>
-                    <FeatureIcon>💼</FeatureIcon>
-                    <FeatureContent>
-                      <FeatureHeading>Booking Management</FeatureHeading>
-                      <FeatureDescription>Efficiently manage bookings, view upcoming appointments, and track client inquiries through the app. Stay organized and responsive to client needs, ensuring a seamless experience from inquiry to booking.</FeatureDescription>
-                    </FeatureContent>
-                  </FeatureItem>
+                {/* User Feature 2 */}
+                <FeatureItem>
+                  <FeatureIcon>📋</FeatureIcon>
+                  <FeatureContent>
+                    <FeatureHeading>Reservation Management</FeatureHeading>
+                    <FeatureDescription>Through the app, effortlessly handle all bookings, monitor upcoming appointments, and keep track of client inquiries. Maintain organization and swiftly respond to client needs, providing a seamless journey from inquiry to confirmed booking.</FeatureDescription>
+                  </FeatureContent>
+                </FeatureItem>
 
-                  {/* User Feature 3 */}
-                  <FeatureItem>
-                    <FeatureIcon>💼</FeatureIcon>
-                    <FeatureContent>
-                      <FeatureHeading>Availability Calendar</FeatureHeading>
-                      <FeatureDescription>Set and manage your availability with an integrated calendar feature. Keep track of your schedule, block off unavailable dates, and manage bookings effectively to optimize your time and resources.</FeatureDescription>
-                    </FeatureContent>
-                  </FeatureItem>
+                {/* User Feature 3 */}
+                <FeatureItem>
+                  <FeatureIcon>📆</FeatureIcon>
+                  <FeatureContent>
+                    <FeatureHeading>Scheduling Calendar</FeatureHeading>
+                    <FeatureDescription>Take control of your schedule with our integrated calendar feature. Set your availability, block off unavailable dates, and efficiently manage bookings to maximize your time and resources. Stay organized and optimize your workflow effortlessly.</FeatureDescription>
+                  </FeatureContent>
+                </FeatureItem>
 
-                  {/* User Feature 4 */}
-                  <FeatureItem>
-                    <FeatureIcon>💼</FeatureIcon>
-                    <FeatureContent>
-                      <FeatureHeading>Review and Rating Management</FeatureHeading>
-                      <FeatureDescription>Monitor and respond to client reviews and ratings to maintain a positive reputation and build trust with potential clients. Showcase positive feedback and address any concerns or feedback to continuously improve your services.</FeatureDescription>
-                    </FeatureContent>
-                  </FeatureItem>
+                {/* User Feature 4 */}
+                <FeatureItem>
+                  <FeatureIcon>⭐</FeatureIcon>
+                  <FeatureContent>
+                    <FeatureHeading>Testimonials and Ratings</FeatureHeading>
+                    <FeatureDescription>Actively monitor and respond to client reviews and ratings to foster trust and maintain a stellar reputation. Highlight positive testimonials and address any issues promptly, ensuring continuous improvement in your services.</FeatureDescription>
+                  </FeatureContent>
+                </FeatureItem>
 
-                  {/* User Feature 5 */}
-                  <FeatureItem>
-                    <FeatureIcon>💼</FeatureIcon>
-                    <FeatureContent>
-                      <FeatureHeading>Marketing and Promotion Tools</FeatureHeading>
-                      <FeatureDescription>Access marketing and promotion tools to increase visibility and attract more clients. Promote your services through featured listings, targeted advertisements, promotional campaigns, and partnerships within the app to reach a wider audience.</FeatureDescription>
-                    </FeatureContent>
-                  </FeatureItem>
+                {/* User Feature 5 */}
+                <FeatureItem>
+                  <FeatureIcon>📢</FeatureIcon>
+                  <FeatureContent>
+                    <FeatureHeading>Advertising and Promotion Tools</FeatureHeading>
+                    <FeatureDescription>Enhance your visibility and draw in more clients with our comprehensive marketing and promotion tools. Utilize targeted ads, featured listings, promotional campaigns, and strategic in-app partnerships to effectively showcase your services to a wider audience.</FeatureDescription>
+                  </FeatureContent>
+                </FeatureItem>
               </FeatureList>
             </SubSection>
           </SubSectionContainer>
         </Section>
 
         <Section id="section3">
-          <FormHeader>Join the Waitlist</FormHeader>
+          <Header>Join the Waitlist</Header>
           <FormContainer>
             <FormField>
               <Label htmlFor="name">Name *</Label>
