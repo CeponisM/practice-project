@@ -81,9 +81,11 @@ const EventItem = styled.li`
   position: relative;
   display: flex;
   flex-direction: column;
+  transition: transform 0.15s ease, box-shadow 0.5s ease;
 
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 20px;
+    transform: scale(1.05);
   }
 
   img {
@@ -135,21 +137,21 @@ const CategoryBubble = styled.div`
 `;
 
 const events = [
-  { title: "Chicago EDM Concert", category: "Music", image: "https://source.unsplash.com/featured/?concert" },
-  { title: "Underground Comedy Club", category: "Comedy", image: "https://source.unsplash.com/featured/?comedy" },
-  { title: "Rock Music Festival", category: "Festival", image: "https://source.unsplash.com/featured/?festival" },
-  { title: "Chicago Golf Tournament", category: "Sports", image: "https://source.unsplash.com/featured/?golf" },
-  { title: "Sing Karaoke!", category: "Entertainment", image: "https://source.unsplash.com/featured/?karaoke" },
-  { title: "Art Exhibition", category: "Art", image: "https://source.unsplash.com/featured/?art" },
-  { title: "Food Truck Festival", category: "Food", image: "https://source.unsplash.com/featured/?foodtruck" },
-  { title: "Jazz Night", category: "Music", image: "https://source.unsplash.com/featured/?jazz" },
-  { title: "Open Mic Poetry", category: "Poetry", image: "https://source.unsplash.com/featured/?poetry" },
-  { title: "Indie Film Screening", category: "Film", image: "https://source.unsplash.com/featured/?film" },
-  { title: "Local Farmers Market", category: "Market", image: "https://source.unsplash.com/featured/?market" },
-  { title: "Craft Beer Tasting", category: "Drinks", image: "https://source.unsplash.com/featured/?beer" },
-  { title: "Tech Meetup", category: "Tech", image: "https://source.unsplash.com/featured/?tech" },
-  { title: "Book Reading", category: "Books", image: "https://source.unsplash.com/featured/?books" },
-  { title: "Yoga in the Park", category: "Wellness", image: "https://source.unsplash.com/featured/?yoga" },
+  { title: "Chicago EDM Concert", category: "Music", image: "images/EDM_Concert.jpg" },
+  { title: "Underground Comedy Club", category: "Comedy", image: "images/Comedy_Club.jpg" },
+  { title: "Rock Music Festival", category: "Festival", image: "images/Rock_Music_Festival.jpg" },
+  { title: "Chicago Golf Tournament", category: "Sports", image: "images/Golf_Tournament.jpg" },
+  { title: "Sing Karaoke!", category: "Entertainment", image: "images/Karaoke.jpg" },
+  { title: "Art Exhibition", category: "Art", image: "images/Art_Exhibition.jpg" },
+  { title: "Food Truck Festival", category: "Food", image: "images/Food_Trucks.jpg" },
+  { title: "Jazz Night", category: "Music", image: "images/Jazz_Night.jpg" },
+  { title: "Open Mic Poetry", category: "Poetry", image: "images/Poetry_Reading.jpg" },
+  { title: "Indie Film Screening", category: "Film", image: "images/Film_Screening.jpg" },
+  { title: "Local Farmers Market", category: "Market", image: "images/Farmers_Market.jpg" },
+  { title: "Craft Beer Tasting", category: "Drinks", image: "images/Beer_Tasting.jpg" },
+  { title: "Tech Meetup", category: "Tech", image: "images/Tech_Meet.jpg" },
+  { title: "Book Reading", category: "Books", image: "images/Book_Reading.jpg" },
+  { title: "Yoga in the Park", category: "Wellness", image: "images/Park_Yoga.jpg" },
 ];
 
 const Pad = () => {

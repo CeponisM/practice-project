@@ -81,6 +81,28 @@ const ContentContainer = styled.div`
   z-index: 3;
 `;
 
+const MainHeader = styled.h1`
+  position: relative;
+  font-size: 3em;
+  margin-bottom: 30px;
+  color: ${({ theme }) => theme.text};
+  font-family: 'Merriweather', serif;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  &::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    color: ${({ theme }) => theme === lightTheme ? '#000000' : '#ffffff'};
+    filter: blur(3px);
+    transform: scale(1.05);
+  }
+`;
+
 const Header = styled.h1`
   position: relative;
   font-size: 3em;
@@ -355,7 +377,7 @@ const App = () => {
         <Section1 id="section1" gradient={gradient} gradientOverlay={gradientOverlay}>
           <ContentContainer>
             <ScrollButton onClick={() => scrollToSection('section3')}>Join Our WaitList</ScrollButton>
-            <Header data-text="Explore and Reserve Activities">Explore and Reserve <h1>Activities</h1></Header>
+            <MainHeader data-text="Explore and Reserve Activities">Explore and Reserve <h1>Activities</h1></MainHeader>
             <Pad />
           </ContentContainer>
         </Section1>
