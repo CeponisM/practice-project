@@ -1,4 +1,3 @@
-// src/components/Topbar.js
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FiMenu, FiSun, FiMoon } from 'react-icons/fi';
@@ -9,7 +8,7 @@ const TopbarContainer = styled.div`
   width: 100%;
   height: 4.5rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.background};
   padding: 10px 20px;
@@ -22,12 +21,13 @@ const TopbarContainer = styled.div`
 `;
 
 const Logo = styled.div`
+  position: absolute;
+  left: 20px;
   font-size: 24px;
   font-weight: bold;
   color: ${({ theme }) => theme.text};
 
   @media (max-width: 768px) {
-    position: absolute;
     left: 50%;
     transform: translateX(-50%);
   }
@@ -36,6 +36,7 @@ const Logo = styled.div`
 const Options = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
 
   @media (max-width: 768px) {
     display: none;
@@ -60,11 +61,8 @@ const MenuButton = styled.div`
 const RightButtons = styled.div`
   display: flex;
   align-items: center;
-
-  @media (max-width: 768px) {
-    position: absolute;
-    right: 20px;
-  }
+  position: absolute;
+  right: 20px;
 `;
 
 const Button = styled.button`
@@ -117,6 +115,14 @@ const ScrollButton = styled.button`
 
   &:hover {
     transform: scale(1.05);
+  }
+
+  @media (max-width: 786px) {
+    transform: scale(0.9);
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 

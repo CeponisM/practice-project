@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Topbar from './components/Topbar';
 import Pad from './components/Pad';
 import Footer from './components/Footer';
@@ -237,12 +237,6 @@ const FormContainer = styled.form`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
 `;
 
-const FormHeader = styled.h2`
-  font-size: 2.2em;
-  margin-bottom: 30px;
-  color: ${({ theme }) => theme.text};
-`;
-
 const FormField = styled.div`
   display: flex;
   flex-direction: column;
@@ -303,6 +297,15 @@ const SubmitButton = styled.button`
   }
 `;
 
+const rainbowTextAnimation = keyframes`
+  0% {
+    background-position: 200% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+`;
+
 const ScrollButton = styled.button`
   padding: 15px 30px;
   margin: 12rem 0px 45px 0px;
@@ -321,6 +324,21 @@ const ScrollButton = styled.button`
   &:hover {
     transform: scale(1.05);
   }
+
+  span {
+    display: inline-block;
+    background: linear-gradient(270deg, #ff7e5f, #feb47b);
+    -webkit-background-clip: text;
+    transition: background 0.2s;
+  }
+
+  &:hover span {
+    background: linear-gradient(to right, white, white, #feb47b);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: ${rainbowTextAnimation} 3s linear infinite;
+  }
 `;
 
 const App = () => {
@@ -336,7 +354,7 @@ const App = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const updateGradient = () => {
+  const updateGradient = useCallback(() => {
     const scrollPosition = window.scrollY;
     const scrollFactor = scrollPosition / (document.body.scrollHeight - window.innerHeight);
     const gradientLight = `radial-gradient(circle at 50% ${18 + scrollFactor * 300}%, #ffffff, #a1c4fd, #c2e9fb)`;
@@ -345,7 +363,7 @@ const App = () => {
     const gradientOverlayDark = `linear-gradient(135deg, rgba(255, 0, 150, 0.2), rgba(0, 204, 255, 0.2))`;
     setGradient(theme === 'light' ? gradientLight : gradientDark);
     setGradientOverlay(theme === 'light' ? gradientOverlayLight : gradientOverlayDark);
-  };
+  }, [theme]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -356,11 +374,11 @@ const App = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [theme]);
+  }, [updateGradient]);
 
   useEffect(() => {
     updateGradient();
-  }, [theme]);
+  }, [updateGradient]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
@@ -376,7 +394,7 @@ const App = () => {
       <AppContainer>
         <Section1 id="section1" gradient={gradient} gradientOverlay={gradientOverlay}>
           <ContentContainer>
-            <ScrollButton onClick={() => scrollToSection('section3')}>Join Our WaitList</ScrollButton>
+            <ScrollButton onClick={() => scrollToSection('section3')}><span>Join Our WaitList</span></ScrollButton>
             <MainHeader data-text="Explore and Reserve Activities">Explore and Reserve <h1>Activities</h1></MainHeader>
             <Pad />
           </ContentContainer>
