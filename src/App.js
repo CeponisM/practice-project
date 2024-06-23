@@ -3,6 +3,7 @@ import Topbar from './components/Topbar';
 import Pad from './components/Pad';
 import Footer from './components/Footer';
 import styled, { ThemeProvider, keyframes } from 'styled-components';
+import { Link as ScrollLink, scroller } from 'react-scroll';
 
 const scrollAnimation = keyframes`
   0% { background-position: 0% 50%; }
@@ -26,6 +27,7 @@ const AppContainer = styled.div`
   color: ${({ theme }) => theme.text};
   min-height: 100vh;
   font-family: 'Roboto', sans-serif;
+  transition: background-color 0.5s ease, color 0.5s ease;
 `;
 
 const Section = styled.div`
@@ -41,7 +43,7 @@ const Section = styled.div`
 
 const Section1 = styled(Section)`
   background: ${({ gradient }) => gradient};
-  transition: background 0.2s;
+  transition: background-color 0.5s ease, color 0.5s ease, border 0.5s ease;
   color: ${({ theme }) => theme.text};
   position: relative;
   overflow: hidden;
@@ -90,6 +92,7 @@ const MainHeader = styled.h1`
   background: linear-gradient(to right, #ff7e5f, #feb47b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  transition: background-color 0.5s ease, color 0.5s ease;
 
   &::before {
     content: attr(data-text);
@@ -112,6 +115,7 @@ const Header = styled.h1`
   background: linear-gradient(to right, #ff7e5f, #feb47b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  transition: background-color 0.5s ease, color 0.5s ease;
 
   &::before {
     content: attr(data-text);
@@ -130,6 +134,7 @@ const Description = styled.p`
   margin: 20px 0;
   max-width: 800px;
   color: ${({ theme }) => theme.text};
+  transition: color 0.5s ease;
 `;
 
 const SubSectionContainer = styled.div`
@@ -159,6 +164,7 @@ const SubSection = styled.div`
     : 'linear-gradient(to right, #434343, #282828)'};
   display: flex;
   flex-direction: column;
+  transition: background 0.5s ease, background-color 0.5s ease, color 0.5s ease, border-image-source 0.5s ease, border 0.5s ease;
 
   @media (max-width: 768px) {
     margin: 10px 0;
@@ -171,6 +177,7 @@ const SubHeader = styled.h2`
   text-align: center;
   margin-bottom: 30px;
   color: ${({ theme }) => theme.text};
+  transition: color 0.5s ease;
 `;
 
 const FeatureList = styled.div`
@@ -187,6 +194,7 @@ const FeatureItem = styled.div`
   padding: 20px;
   border-radius: 10px;
   background: ${({ theme }) => theme.background};
+  transition: background 0.5s ease, border-image-source 0.5s ease, border 0.5s ease;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border: 2px solid;
   border-image-slice: 1;
@@ -202,6 +210,7 @@ const FeatureIcon = styled.div`
   font-size: 2.5em;
   margin-right: 20px;
   color: ${({ theme }) => theme.text};
+  transition: color 0.5s ease;
 `;
 
 const FeatureContent = styled.div`
@@ -215,12 +224,14 @@ const FeatureHeading = styled.h3`
   font-size: 1.8em;
   margin: 0;
   color: ${({ theme }) => theme.text};
+  transition: color 0.5s ease;
 `;
 
 const FeatureDescription = styled.p`
   font-size: 1.1em;
   margin: 0;
   color: ${({ theme }) => theme.text};
+  transition: color 0.5s ease;
   flex: 1;
 `;
 
@@ -234,6 +245,7 @@ const FormContainer = styled.form`
   padding: 30px;
   border-radius: 15px;
   background: ${({ theme }) => theme.background};
+  transition: background-color 0.5s ease;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px;
 `;
 
@@ -248,6 +260,7 @@ const Label = styled.label`
   font-size: 1.2em;
   margin-bottom: 5px;
   color: ${({ theme }) => theme.text};
+  transition: color 0.5s ease;
 `;
 
 const Input = styled.input`
@@ -257,6 +270,7 @@ const Input = styled.input`
   font-size: 1em;
   background: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
+  transition: background-color 0.5s ease, color 0.5s ease, border 0.5s ease;
 `;
 
 const TextArea = styled.textarea`
@@ -266,6 +280,7 @@ const TextArea = styled.textarea`
   font-size: 1em;
   background: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
+  transition: background 0.5s ease, color 0.5s ease, border 0.5s ease;
   resize: vertical;
 `;
 
@@ -276,6 +291,7 @@ const Select = styled.select`
   font-size: 1em;
   background: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
+  transition: background 0.5s ease, color 0.5s ease, border 0.5s ease;
 `;
 
 const SubmitButton = styled.button`
@@ -385,7 +401,11 @@ const App = () => {
   };
 
   const scrollToSection = (sectionId) => {
-    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+    scroller.scrollTo(sectionId, {
+      duration: 600,
+      delay: 0,
+      smooth: 'easeInOutQuart'
+    });
   };
 
   return (
@@ -394,7 +414,7 @@ const App = () => {
       <AppContainer>
         <Section1 id="section1" gradient={gradient} gradientOverlay={gradientOverlay}>
           <ContentContainer>
-            <ScrollButton onClick={() => scrollToSection('section3')}><span>Join Our WaitList</span></ScrollButton>
+            <ScrollButton><ScrollLink to="section3" smooth="easeInOutQuart" duration={600}><span>Join Our WaitList</span></ScrollLink></ScrollButton>
             <MainHeader data-text="Explore and Reserve Activities">Explore and Reserve <h1>Activities</h1></MainHeader>
             <Pad />
           </ContentContainer>

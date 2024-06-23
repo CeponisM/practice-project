@@ -11,6 +11,7 @@ const TopbarContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.background};
+  transition: background 0.5s ease, color 0.5s ease, border-image-source 0.5s ease;
   padding: 10px 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
@@ -26,6 +27,7 @@ const Logo = styled.div`
   font-size: 24px;
   font-weight: bold;
   color: ${({ theme }) => theme.text};
+  transition: color 0.5s ease;
 
   @media (max-width: 768px) {
     left: 50%;
@@ -47,6 +49,7 @@ const Option = styled.div`
   margin-left: 20px;
   cursor: pointer;
   color: ${({ theme }) => theme.text};
+  transition: color 0.5s ease;
 `;
 
 const MenuButton = styled.div`
@@ -55,6 +58,7 @@ const MenuButton = styled.div`
     display: block;
     cursor: pointer;
     color: ${({ theme }) => theme.text};
+    transition: color 0.5s ease;
   }
 `;
 
@@ -71,6 +75,7 @@ const Button = styled.button`
   background: none;
   border: none;
   color: ${({ theme }) => theme.text};
+  transition: color 0.5s ease;
   font-size: 16px;
 `;
 
@@ -80,6 +85,7 @@ const DropdownMenu = styled.div`
   top: 50px;
   left: 20px;
   background-color: ${({ theme }) => theme.background};
+  transition: color 0.5s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
   z-index: 1001;
@@ -93,6 +99,7 @@ const DropdownOption = styled.div`
   padding: 10px;
   cursor: pointer;
   color: ${({ theme }) => theme.text};
+  transition: color 0.5s ease;
 
   &:hover {
     background-color: ${({ theme }) => theme.text};
