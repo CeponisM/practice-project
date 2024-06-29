@@ -396,6 +396,12 @@ const App = () => {
     updateGradient();
   }, [updateGradient]);
 
+  // Check browser dark/light color scheme upon entry
+  useEffect(() => {
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setTheme(prefersDarkScheme ? 'dark' : 'light');
+  }, []);
+
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
@@ -414,7 +420,7 @@ const App = () => {
       <AppContainer>
         <Section1 id="section1" gradient={gradient} gradientOverlay={gradientOverlay}>
           <ContentContainer>
-            <ScrollButton><ScrollLink to="section3" smooth="easeInOutQuart" duration={600}><span>Join Our WaitList</span></ScrollLink></ScrollButton>
+            <ScrollLink to="section3" smooth="easeInOutQuart" duration={600}><ScrollButton><span>Join Our WaitList</span></ScrollButton></ScrollLink>
             <MainHeader data-text="Explore and Reserve Activities">Explore and Reserve <h1>Activities</h1></MainHeader>
             <Pad />
           </ContentContainer>
