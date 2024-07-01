@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import styled from 'styled-components';
 import { FiMenu, FiSun, FiMoon } from 'react-icons/fi';
 
@@ -11,13 +11,56 @@ const TopbarContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.background};
-  transition: background 0.5s ease, color 0.5s ease, border-image-source 0.5s ease;
+  transition: background 0.3s ease, color 0.3s ease;
   padding: 10px 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 
   @media (max-width: 768px) {
     justify-content: space-between;
+  }
+`;
+
+const LogoContainer = styled.div`
+  position: absolute;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  
+  @media (max-width: 768px) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+
+const LogoText = styled.span`
+  font-size: 24px;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ff7e5f, #feb47b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const LogoIcon = styled.div`
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  background: linear-gradient(45deg, #ff7e5f, #feb47b);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: rotate(360deg);
   }
 `;
 
@@ -45,12 +88,12 @@ const Options = styled.div`
   }
 `;
 
-const Option = styled.div`
+const Option = memo(styled.div`
   margin-left: 20px;
   cursor: pointer;
   color: ${({ theme }) => theme.text};
-  transition: color 0.5s ease;
-`;
+  transition: color 0.3s ease;
+`);
 
 const MenuButton = styled.div`
   display: none;
@@ -133,33 +176,39 @@ const ScrollButton = styled.button`
   }
 `;
 
-const Topbar = ({ scrollToSection, toggleTheme, theme }) => {
+const Topbar = memo(({ scrollToSection, toggleTheme, theme }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleMenuToggle = useCallback(() => setMenuOpen(prev => !prev), []);
+  const handleScrollToSection = useCallback((section) => () => scrollToSection(section), [scrollToSection]);
 
   return (
     <TopbarContainer>
-      <MenuButton onClick={() => setMenuOpen(!menuOpen)}>
+      <MenuButton onClick={handleMenuToggle}>
         <FiMenu size={24} />
       </MenuButton>
-      <Logo>Logo</Logo>
+      <LogoContainer>
+        <LogoIcon>P</LogoIcon>
+        <LogoText>Portfolio</LogoText>
+      </LogoContainer>
       <Options>
-        <Option onClick={() => scrollToSection('section1')}>Option 1</Option>
-        <Option onClick={() => scrollToSection('section2')}>Option 2</Option>
-        <Option onClick={() => scrollToSection('section3')}>Option 3</Option>
+        <Option onClick={handleScrollToSection('section1')}>Option 1</Option>
+        <Option onClick={handleScrollToSection('section2')}>Option 2</Option>
+        <Option onClick={handleScrollToSection('section3')}>Option 3</Option>
       </Options>
       <RightButtons>
-        <ScrollButton onClick={() => scrollToSection('section3')}>Join Our WaitList</ScrollButton>
+        <ScrollButton onClick={handleScrollToSection('section3')}>Join Our WaitList</ScrollButton>
         <Button onClick={toggleTheme}>
           {theme === 'light' ? <FiMoon size={20} /> : <FiSun size={20} />}
         </Button>
       </RightButtons>
       <DropdownMenu open={menuOpen}>
-        <DropdownOption onClick={() => scrollToSection('section1')}>Option 1</DropdownOption>
-        <DropdownOption onClick={() => scrollToSection('section2')}>Option 2</DropdownOption>
-        <DropdownOption onClick={() => scrollToSection('section3')}>Option 3</DropdownOption>
+        <DropdownOption onClick={handleScrollToSection('section1')}>Option 1</DropdownOption>
+        <DropdownOption onClick={handleScrollToSection('section2')}>Option 2</DropdownOption>
+        <DropdownOption onClick={handleScrollToSection('section3')}>Option 3</DropdownOption>
       </DropdownMenu>
     </TopbarContainer>
   );
-};
+});
 
 export default Topbar;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Topbar from './components/Topbar';
 import Pad from './components/Pad';
 import Footer from './components/Footer';
@@ -30,6 +30,19 @@ const AppContainer = styled.div`
   transition: background-color 0.5s ease, color 0.5s ease;
 `;
 
+const floatingBubbles = keyframes`
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+    border-radius: 0;
+  }
+  100% {
+    transform: translateY(1000px) rotate(720deg);
+    opacity: 0;
+    border-radius: 50%;
+  }
+`;
+
 const Section = styled.div`
   height: auto;
   padding: 60px 0;
@@ -41,13 +54,20 @@ const Section = styled.div`
   text-align: center;
 `;
 
-const Section1 = styled(Section)`
+const Section1 = styled.div`
   background: ${({ gradient }) => gradient};
   transition: background-color 0.5s ease, color 0.5s ease, border 0.5s ease;
   color: ${({ theme }) => theme.text};
   position: relative;
   overflow: hidden;
   margin-top: 4.5rem;
+  padding: 60px 0;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 
   &::before {
     content: '';
@@ -75,6 +95,53 @@ const Section1 = styled(Section)`
     mix-blend-mode: overlay;
     pointer-events: none;
     z-index: 2;
+  }
+`;
+
+const Bubble = styled.div`
+  position: absolute;
+  top: -100px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  animation: ${floatingBubbles} 25s infinite;
+  z-index: 3;
+
+  &:nth-child(1) {
+    left: 10%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+  }
+
+  &:nth-child(2) {
+    left: 20%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+  }
+
+  &:nth-child(3) {
+    left: 35%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 4s;
+  }
+
+  &:nth-child(4) {
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+  }
+
+  &:nth-child(5) {
+    left: 65%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 0s;
   }
 `;
 
@@ -357,6 +424,23 @@ const ScrollButton = styled.button`
   }
 `;
 
+const Section1Component = ({ gradient, gradientOverlay, children }) => {
+  const bubbles = useMemo(() => {
+    return Array(5).fill().map((_, index) => (
+      <Bubble key={index} />
+    ));
+  }, []);
+
+  return (
+    <Section1 id="section1" gradient={gradient} gradientOverlay={gradientOverlay}>
+      {bubbles}
+      <ContentContainer>
+        {children}
+      </ContentContainer>
+    </Section1>
+  );
+};
+
 const App = () => {
   const [theme, setTheme] = useState('light');
   const [gradient, setGradient] = useState(
@@ -383,7 +467,7 @@ const App = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      updateGradient();
+      requestAnimationFrame(updateGradient);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -418,13 +502,15 @@ const App = () => {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <Topbar scrollToSection={scrollToSection} toggleTheme={toggleTheme} theme={theme} />
       <AppContainer>
-        <Section1 id="section1" gradient={gradient} gradientOverlay={gradientOverlay}>
-          <ContentContainer>
-            <ScrollLink to="section3" smooth="easeInOutQuart" duration={600}><ScrollButton><span>Join Our WaitList</span></ScrollButton></ScrollLink>
-            <MainHeader data-text="Explore and Reserve Activities">Explore and Reserve <h1>Activities</h1></MainHeader>
-            <Pad />
-          </ContentContainer>
-        </Section1>
+        <Section1Component gradient={gradient} gradientOverlay={gradientOverlay}>
+          <ScrollLink to="section3" smooth="easeInOutQuart" duration={600}>
+            <ScrollButton><span>Join Our WaitList</span></ScrollButton>
+          </ScrollLink>
+          <MainHeader data-text="Explore and Reserve Activities">
+            Explore and Reserve <h1>Activities</h1>
+          </MainHeader>
+          <Pad />
+        </Section1Component>
         <Section id="section2">
           <Header>Highlights</Header>
           <Description>

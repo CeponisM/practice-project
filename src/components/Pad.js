@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const PadWrapper = styled.div`
   width: 100%;
@@ -15,7 +17,13 @@ const PadContainer = styled.div`
   background: #222222;
   border: 4px solid #6c6c6c;
   border-radius: 30px;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 0px, rgba(0, 0, 0, 0.29) 0px 9px 20px, rgba(0, 0, 0, 0.26) 0px 37px 37px, rgba(0, 0, 0, 0.15) 0px 84px 50px, rgba(0, 0, 0, 0.04) 0px 149px 60px, rgba(0, 0, 0, 0.01) 0px 233px 65px;
+  box-shadow: 
+    0px 0px 0px rgba(0, 0, 0, 0.3),
+    0px 9px 20px rgba(0, 0, 0, 0.29),
+    0px 37px 37px rgba(0, 0, 0, 0.26),
+    0px 84px 50px rgba(0, 0, 0, 0.15),
+    0px 149px 60px rgba(0, 0, 0, 0.04),
+    0px 233px 65px rgba(0, 0, 0, 0.01);
   transform: ${({ tiltAngle }) => `rotateX(${tiltAngle}deg)`};
   transform-origin: bottom;
   transition: transform 0.1s;
@@ -26,13 +34,13 @@ const PadContainer = styled.div`
     width: 100%;
     transform: none;
     max-height: 600px;
-    overflow-y: scroll;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
   }
 
   &::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
+    display: none;
   }
 `;
 
@@ -88,7 +96,7 @@ const EventItem = styled.li`
     transform: scale(1.05);
   }
 
-  img {
+  .lazy-load-image-background {
     width: 100%;
     height: 120px;
     object-fit: cover;
@@ -157,44 +165,52 @@ const events = [
 const Pad = () => {
   const [tiltAngle, setTiltAngle] = useState(21);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const padElement = document.getElementById('pad');
-      if (padElement) {
-        const rect = padElement.getBoundingClientRect();
-        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-        const padMiddle = rect.top + (rect.height);
-        const viewportMiddle = windowHeight / 2;
-        const maxTilt = 21;
+  const handleScroll = useCallback(() => {
+    const padElement = document.getElementById('pad');
+    if (padElement) {
+      const rect = padElement.getBoundingClientRect();
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+      const padMiddle = rect.top + (rect.height / 2);
+      const viewportMiddle = windowHeight / 2;
+      const maxTilt = 21;
 
-        if (padMiddle <= viewportMiddle) {
-          setTiltAngle(0);
-        } else {
-          const tilt = ((padMiddle - viewportMiddle) / (windowHeight - viewportMiddle)) * maxTilt;
-          setTiltAngle(Math.min(tilt, maxTilt));
-        }
+      if (padMiddle <= viewportMiddle) {
+        setTiltAngle(0);
+      } else {
+        const tilt = ((padMiddle - viewportMiddle) / (windowHeight - viewportMiddle)) * maxTilt;
+        setTiltAngle(Math.min(tilt, maxTilt));
       }
-    };
+    }
+  }, []);
 
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [handleScroll]);
+
+  const memoizedEvents = useMemo(() => events.map((event, index) => (
+    <EventItem key={index}>
+      <LazyLoadImage
+        src={event.image}
+        alt={event.title}
+        effect="blur"
+        width="100%"
+        height="120px"
+      />
+      <CategoryBubble>{event.category}</CategoryBubble>
+      <h1>{event.title}</h1>
+      <h2>{event.category}</h2>
+    </EventItem>
+  )), []);
 
   return (
     <PadWrapper>
       <PadContainer id="pad" tiltAngle={tiltAngle}>
         <PadScreen>
           <EventList>
-            {events.map((event, index) => (
-              <EventItem key={index}>
-                <img src={event.image} alt={event.title} />
-                <CategoryBubble>{event.category}</CategoryBubble>
-                <h1>{event.title}</h1>
-                <h2>{event.category}</h2>
-              </EventItem>
-            ))}
+            {memoizedEvents}
           </EventList>
         </PadScreen>
       </PadContainer>
