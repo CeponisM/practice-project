@@ -93,6 +93,9 @@ const Option = memo(styled.div`
   cursor: pointer;
   color: ${({ theme }) => theme.text};
   transition: color 0.3s ease;
+  &:hover {
+    color: #ff7e5f;
+  }
 `);
 
 const MenuButton = styled.div`
@@ -120,6 +123,9 @@ const Button = styled.button`
   color: ${({ theme }) => theme.text};
   transition: color 0.5s ease;
   font-size: 16px;
+  &:hover {
+    color: #ff7e5f;
+  }
 `;
 
 const DropdownMenu = styled.div`
