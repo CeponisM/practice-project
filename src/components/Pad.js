@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -26,7 +26,7 @@ const PadContainer = styled.div`
     0px 233px 65px rgba(0, 0, 0, 0.01);
   transform: ${({ tiltAngle }) => `rotateX(${tiltAngle}deg)`};
   transform-origin: bottom;
-  transition: transform 0.1s;
+  transition: transform 0.35s ease-out;
   backface-visibility: hidden;
   overflow: hidden;
 
@@ -55,11 +55,11 @@ const PadScreen = styled.div`
   @media (max-width: 768px) {
     padding: 10px;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
   }
 
   &::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
+    display: none;
   }
 `;
 
@@ -125,11 +125,11 @@ const EventItem = styled.li`
       margin: 5px 0;
     }
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
   }
 
   &::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
+    display: none;
   }
 `;
 
@@ -164,46 +164,60 @@ const events = [
 
 const Pad = () => {
   const [tiltAngle, setTiltAngle] = useState(21);
+  const tiltRef = useRef(21);
+  const frameRef = useRef(null);
 
-  const handleScroll = useCallback(() => {
+  const calculateTilt = useCallback(() => {
     const padElement = document.getElementById('pad');
-    if (padElement) {
-      const rect = padElement.getBoundingClientRect();
-      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-      const padMiddle = rect.top + (rect.height / 2);
-      const viewportMiddle = windowHeight / 2;
-      const maxTilt = 21;
+    if (!padElement) return;
 
-      if (padMiddle <= viewportMiddle) {
-        setTiltAngle(0);
-      } else {
-        const tilt = ((padMiddle - viewportMiddle) / (windowHeight - viewportMiddle)) * maxTilt;
-        setTiltAngle(Math.min(tilt, maxTilt));
-      }
+    const rect = padElement.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    const padMiddle = rect.top + rect.height / 2;
+    const viewportMiddle = windowHeight / 2;
+    const maxTilt = 21;
+
+    let newTilt = 0;
+    if (padMiddle > viewportMiddle) {
+      newTilt = ((padMiddle - viewportMiddle) / (windowHeight - viewportMiddle)) * maxTilt;
+      newTilt = Math.min(newTilt, maxTilt);
+    }
+
+    if (Math.abs(newTilt - tiltRef.current) > 0.5) {
+      tiltRef.current = newTilt;
+      setTiltAngle(newTilt);
     }
   }, []);
+
+  const handleScroll = useCallback(() => {
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    frameRef.current = requestAnimationFrame(calculateTilt);
+  }, [calculateTilt]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
     };
   }, [handleScroll]);
 
-  const memoizedEvents = useMemo(() => events.map((event, index) => (
-    <EventItem key={index}>
-      <LazyLoadImage
-        src={event.image}
-        alt={event.title}
-        effect="blur"
-        width="100%"
-        height="120px"
-      />
-      <CategoryBubble>{event.category}</CategoryBubble>
-      <h1>{event.title}</h1>
-      <h2>{event.category}</h2>
-    </EventItem>
-  )), []);
+  const memoizedEvents = useMemo(() =>
+    events.map((event, index) => (
+      <EventItem key={index}>
+        <LazyLoadImage
+          src={event.image}
+          alt={event.title}
+          effect="blur"
+          width="100%"
+          height="120px"
+        />
+        <CategoryBubble>{event.category}</CategoryBubble>
+        <h1>{event.title}</h1>
+        <h2>{event.category}</h2>
+      </EventItem>
+    ))
+  , []);
 
   return (
     <PadWrapper>
