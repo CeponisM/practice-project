@@ -121,8 +121,7 @@ const LogoContainer = styled.div`
 const LogoIcon = styled.div`
   width: 30px;
   height: 30px;
-  background: linear-gradient(45deg, #ff7e5f, #feb47b, #ff7e5f);
-  background-size: 200% 200%;
+  background: linear-gradient(45deg, #ff7e5f, #feb47b);
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -130,31 +129,10 @@ const LogoIcon = styled.div`
   color: white;
   font-weight: bold;
   margin-right: 10px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  box-shadow: 0 2px 8px rgba(255, 126, 95, 0.3);
-  
+  transition: transform 0.3s ease;
+
   &:hover {
-    animation: ${rotateAnimation} 0.6s ease-in-out;
-    box-shadow: 0 4px 16px rgba(255, 126, 95, 0.5);
-    transform: scale(1.1);
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #ff7e5f, #feb47b, #ff7e5f);
-    background-size: 200% 200%;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    animation: ${gradientShiftAnimation} 3s ease infinite;
-  }
-  
-  &:hover::after {
-    opacity: 1;
+    transform: rotate(360deg);
   }
 `;
 
@@ -240,8 +218,6 @@ const ToggleButton = styled.button`
   cursor: pointer;
   color: ${({ theme }) => theme.text};
   font-size: 24px;
-  padding: 8px;
-  border-radius: 50%;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   display: flex;
@@ -250,9 +226,7 @@ const ToggleButton = styled.button`
   
   &:hover {
     color: #ff7e5f;
-    background: rgba(255, 126, 95, 0.1);
     transform: scale(1.1) rotate(15deg);
-    box-shadow: 0 4px 12px rgba(255, 126, 95, 0.2);
   }
   
   &:active {
@@ -274,7 +248,7 @@ const Footer = memo(({ toggleTheme, theme }) => {
   );
 
   return (
-    <FooterContainer theme={theme}>
+    <FooterContainer>
       <LeftSection>
         <LogoContainer>
           <LogoIcon>P</LogoIcon>
@@ -290,7 +264,6 @@ const Footer = memo(({ toggleTheme, theme }) => {
             target="_blank"
             rel="noopener noreferrer"
             className="social-link-footer"
-            theme={theme}
           >
             <FiGithub />
             MCeponis
@@ -302,7 +275,6 @@ const Footer = memo(({ toggleTheme, theme }) => {
         <ToggleButton 
           onClick={toggleTheme} 
           aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
-          theme={theme}
         >
           {themeIcon}
         </ToggleButton>

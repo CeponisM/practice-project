@@ -5,7 +5,6 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   z-index: 2;
-  border-radius: 8px;
   padding: 6px 10px;
   
   /* Add subtle glow effect */
@@ -17,7 +16,6 @@
 
 .social-link-footer:hover {
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 20px rgba(255, 126, 95, 0.3);
   
   /* Add animated underline */
   background: linear-gradient(45deg, rgba(255, 126, 95, 0.1), rgba(254, 180, 123, 0.1));
