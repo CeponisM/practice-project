@@ -177,6 +177,7 @@ const Option = styled.div`
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   
   &::before {
     content: '';
