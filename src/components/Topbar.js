@@ -442,13 +442,13 @@ const Topbar = memo(({ scrollToSection, toggleTheme, theme }) => {
         </LogoContainer>
         
         <Options>
-          <Option onClick={handleScrollToSection('section1')} theme={theme}>
+          <Option onClick={handleScrollToSection('section1')}>
             About
           </Option>
-          <Option onClick={handleScrollToSection('section2')} theme={theme}>
+          <Option onClick={handleScrollToSection('section2')}>
             Projects
           </Option>
-          <Option onClick={handleScrollToSection('section3')} theme={theme}>
+          <Option onClick={handleScrollToSection('section3')}>
             Contact
           </Option>
         </Options>
