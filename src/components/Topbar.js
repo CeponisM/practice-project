@@ -259,9 +259,7 @@ const ThemeButton = styled.button`
   
   &:hover {
     color: #ff7e5f;
-    background: rgba(255, 126, 95, 0.1);
     transform: scale(1.1) rotate(15deg);
-    box-shadow: 0 4px 15px rgba(255, 126, 95, 0.2);
   }
   
   &:active {
@@ -461,7 +459,6 @@ const Topbar = memo(({ scrollToSection, toggleTheme, theme }) => {
           <ThemeButton 
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
-            theme={theme}
           >
             {themeIcon}
           </ThemeButton>
