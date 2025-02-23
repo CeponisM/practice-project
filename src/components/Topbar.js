@@ -114,11 +114,9 @@ const LogoIcon = styled.div`
   font-size: 16px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  box-shadow: 0 3px 10px rgba(255, 126, 95, 0.3);
   
   &:hover {
     animation: ${rotateAnimation} 0.6s ease-in-out;
-    box-shadow: 0 5px 20px rgba(255, 126, 95, 0.5);
     transform: scale(1.1);
   }
   

@@ -260,7 +260,7 @@ const Footer = memo(({ toggleTheme, theme }) => {
         <Text>
           Built by
           <SocialLink
-            href="https://github.com/CeponisM/Resume-App"
+            href="https://github.com/CeponisM"
             target="_blank"
             rel="noopener noreferrer"
             className="social-link-footer"
