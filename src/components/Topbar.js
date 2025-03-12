@@ -429,7 +429,7 @@ const Topbar = memo(({ scrollToSection, toggleTheme, theme }) => {
   return (
     <>
       <TopbarContainer theme={theme}>
-        <MenuButton onClick={handleMenuToggle} theme={theme}>
+        <MenuButton onClick={handleMenuToggle}>
           {menuIcon}
         </MenuButton>
         
@@ -463,13 +463,13 @@ const Topbar = memo(({ scrollToSection, toggleTheme, theme }) => {
         </RightButtons>
         
         <DropdownMenu $open={menuOpen} theme={theme}>
-          <DropdownOption onClick={handleScrollToSection('section1')} theme={theme}>
+          <DropdownOption onClick={handleScrollToSection('section1')}>
             About
           </DropdownOption>
-          <DropdownOption onClick={handleScrollToSection('section2')} theme={theme}>
+          <DropdownOption onClick={handleScrollToSection('section2')}>
             Projects
           </DropdownOption>
-          <DropdownOption onClick={handleScrollToSection('section3')} theme={theme}>
+          <DropdownOption onClick={handleScrollToSection('section3')}>
             Contact
           </DropdownOption>
         </DropdownMenu>
