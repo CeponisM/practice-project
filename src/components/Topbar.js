@@ -335,6 +335,7 @@ const DropdownMenu = styled.div`
   z-index: 1001;
   min-width: 200px;
   animation: ${slideInUp} 0.3s ease-out;
+  margin-top: 12px;
   
   // Dark mode specific styles
   ${({ theme }) => theme.mode === 'dark' && css`
@@ -357,6 +358,7 @@ const DropdownOption = styled.div`
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  margin-bottom: 2px;
   
   &::before {
     content: '';
