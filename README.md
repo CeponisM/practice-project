@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# Practice Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple front-end practice project for signing up to a waiting list application. Custom mock pad display of what the app could look like with reactive styling. Distinct styling and Dark/light mode implementation for user chosen styling.
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+- **Waiting List Signup**: Clean and intuitive signup interface
+- **Mock Display**: Visual representation of the application interface
+- **Reactive Styling**: Dynamic responsive design that adapts to user interactions
+- **Dark/Light Mode**: Toggle between themes for personalized user experience
+- **Custom Styling**: Unique design elements and animations
 
-### `npm start`
+## 🛠️ Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React 18.3.1** - Modern React with hooks and concurrent features
+- **Styled Components 6.1.11** - CSS-in-JS styling solution
+- **React Icons 5.2.1** - Popular icon library
+- **React Scroll 1.9.0** - Smooth scrolling functionality
+- **React Window 1.8.11** - Efficient rendering of large lists
+- **React Lazy Load Image Component 1.6.2** - Optimized image loading
+- **Lodash Throttle 4.1.1** - Performance optimization utilities
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📦 Installation
 
-### `npm test`
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd practice-project
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Install dependencies:
+```bash
+npm install
+```
 
-### `npm run build`
+3. Start the development server:
+```bash
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The application will open in your browser at `http://localhost:3000`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🔧 Available Scripts
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- `npm start` - Runs the app in development mode
+- `npm build` - Builds the app for production
+- `npm test` - Launches the test runner
+- `npm eject` - Ejects from Create React App (irreversible)
 
-### `npm run eject`
+## 🌐 Deployment
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+This project is configured with a homepage path of `/8/` for deployment. Build the project using `npm run build` and deploy the contents of the `build` folder to your web server.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🎨 Theme Support
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The application includes a comprehensive theming system with:
+- Light and dark mode variants
+- Smooth transitions between themes
+- Consistent color schemes across all components
+- User preference persistence
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📱 Browser Support
 
-## Learn More
+### Production
+- Modern browsers with >0.2% market share
+- Excludes dead browsers and Opera Mini
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Development
+- Latest Chrome, Firefox, and Safari versions
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📄 License
 
-### Code Splitting
+This is a private practice project for educational purposes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🤝 Contributing
 
-### Analyzing the Bundle Size
+This is a practice project, but feedback and suggestions are welcome for learning purposes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+*Built with ❤️ using React and modern web technologies*
