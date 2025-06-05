@@ -24,7 +24,7 @@ A simple front-end practice project for signing up to a waiting list application
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/CeponisM/practice-project.git
 cd practice-project
 ```
 
